@@ -6,21 +6,23 @@ import lombok.*;
 import java.util.List;
 
 @Entity
-@Table(name="roles")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
-    @Column(nullable=false, unique=true)
-    private String name;
+    @Column(nullable = false)
+    private String stageName;
 
-    @ManyToMany(mappedBy="roles")
-    private List<User> users;
+    @Column(nullable = false)
+    private String bio;
+
+    @OneToMany
+    private List<Song> songs;
 }
