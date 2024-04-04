@@ -62,13 +62,12 @@ public class CustomUserDetailsService implements UserDetailsService, Application
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-
-        if (alreadySetup)
-            return;
-
         createRoleIfNotFound("ROLE_ADMIN");
         createRoleIfNotFound("ROLE_USER");
         createRoleIfNotFound("ROLE_MOD");
+
+        if (alreadySetup)
+            return;
 
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         User user = new User();
@@ -89,6 +88,8 @@ public class CustomUserDetailsService implements UserDetailsService, Application
             role = new Role();
             role.setName(name);
             roleRepository.save(role);
+        } else {
+            alreadySetup = true;
         }
         return role;
     }
