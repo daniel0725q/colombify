@@ -34,8 +34,16 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Genre updateGenre(GenreDto genreDto) {
-        return null;
+    public Genre updateGenre(GenreDto genreDto) throws Exception {
+        var genreOptional = genreRepository.findById(genreDto.getId());
+        if (genreOptional.isEmpty()) {
+            throw new Exception("No genre present");
+        }
+        var genre = genreOptional.get();
+        genre.setName(genreDto.getName());
+        genre.setDescription(genreDto.getDescription());
+        genreRepository.save(genre);
+        return genre;
     }
 
     @Override
@@ -45,6 +53,6 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public void deleteGenre(Long genreId) {
-
+        genreRepository.deleteById(genreId);
     }
 }

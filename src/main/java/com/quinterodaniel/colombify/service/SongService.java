@@ -10,4 +10,8 @@ public interface SongService {
     Song createSong(SongDto song) throws Exception;
     Optional<Song> getSong(Long id);
     List<Song> getSongs();
+
+    Song updateSong(SongDto song) throws Exception;
+
+    void deleteSong(Long id);
 }

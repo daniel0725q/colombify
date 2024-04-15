@@ -1,5 +1,6 @@
 package com.quinterodaniel.colombify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +28,6 @@ public class Genre {
     private String colorInHex;
 
     @OneToMany
+    @JsonIgnore
     private List<Song> songs;
 }
