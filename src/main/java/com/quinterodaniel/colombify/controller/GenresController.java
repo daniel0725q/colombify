@@ -21,9 +21,9 @@ public class GenresController {
         return ResponseEntity.ok(genreService.createGenre(genreToCreate));
     }
 
-    @PatchMapping
-    public ResponseEntity updateGenre(@RequestBody GenreDto genreToUpdate) throws Exception {
-        return ResponseEntity.ok(genreService.updateGenre(genreToUpdate));
+    @PatchMapping("/{id}")
+    public ResponseEntity updateGenre(@PathVariable("id") Long id, @RequestBody GenreDto genreToUpdate) throws Exception {
+        return ResponseEntity.ok(genreService.updateGenre(id, genreToUpdate));
     }
 
     @GetMapping

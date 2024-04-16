@@ -11,7 +11,7 @@ public interface SongService {
     Optional<Song> getSong(Long id);
     List<Song> getSongs();
 
-    Song updateSong(SongDto song) throws Exception;
+    Song updateSong(Long id, SongDto song) throws Exception;
 
     void deleteSong(Long id);
 }

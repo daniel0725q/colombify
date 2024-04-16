@@ -34,8 +34,8 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Genre updateGenre(GenreDto genreDto) throws Exception {
-        var genreOptional = genreRepository.findById(genreDto.getId());
+    public Genre updateGenre(Long id, GenreDto genreDto) throws Exception {
+        var genreOptional = genreRepository.findById(id);
         if (genreOptional.isEmpty()) {
             throw new Exception("No genre present");
         }

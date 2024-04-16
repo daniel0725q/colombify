@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface GenreService {
     Genre createGenre(GenreDto genreToCreate);
     Optional<Genre> getGenre(Long genreId);
-    Genre updateGenre(GenreDto genreDto) throws Exception;
+    Genre updateGenre(Long id, GenreDto genreDto) throws Exception;
     List<Genre> getAllGenres();
     void deleteGenre(Long genreId);
 }

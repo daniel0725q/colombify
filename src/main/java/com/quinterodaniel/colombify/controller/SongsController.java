@@ -24,9 +24,9 @@ public class SongsController {
         return ResponseEntity.ok(songService.createSong(songToCreate));
     }
 
-    @PatchMapping
-    public ResponseEntity updateSong(@RequestBody SongDto songToUpdate) throws Exception {
-        return ResponseEntity.ok(songService.updateSong(songToUpdate));
+    @PatchMapping("/{id}")
+    public ResponseEntity updateSong(@PathVariable("id") Long id, @RequestBody SongDto songToUpdate) throws Exception {
+        return ResponseEntity.ok(songService.updateSong(id, songToUpdate));
     }
 
     @GetMapping

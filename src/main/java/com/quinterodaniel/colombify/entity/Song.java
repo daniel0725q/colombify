@@ -29,10 +29,9 @@ public class Song {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Genre genre;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Artist artist;
 }

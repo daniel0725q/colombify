@@ -87,8 +87,8 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Song updateSong(SongDto songDto) throws Exception {
-        var songOptional = songRepository.findById(songDto.getId());
+    public Song updateSong(Long id, SongDto songDto) throws Exception {
+        var songOptional = songRepository.findById(id);
         if (songOptional.isEmpty()) {
             throw new Exception("Song not found");
         }
