@@ -24,7 +24,7 @@ public class Artist {
     @Column(nullable = false)
     private String bio;
 
-    @OneToMany
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Song> songs;
 }
