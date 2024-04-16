@@ -2,6 +2,8 @@ package com.quinterodaniel.colombify.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -28,8 +30,9 @@ public class Song {
     private String description;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Genre genre;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Artist artist;
 }

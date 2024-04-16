@@ -8,6 +8,9 @@ import com.quinterodaniel.colombify.repository.SongRepository;
 import com.quinterodaniel.colombify.service.ArtistService;
 import com.quinterodaniel.colombify.service.GenreService;
 import com.quinterodaniel.colombify.service.SongService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,15 +26,19 @@ public class SongServiceImpl implements SongService {
     private final ArtistRepository artistRepository;
     private final GenreRepository genreRepository;
 
+    private final EntityManager entityManager;
+
     public SongServiceImpl(SongRepository songRepository, ArtistService artistService,
                            GenreService genreService,
                            ArtistRepository artistRepository,
-                           GenreRepository genreRepository) {
+                           GenreRepository genreRepository,
+                           EntityManager entityManager) {
         this.songRepository = songRepository;
         this.artistService = artistService;
         this.genreService = genreService;
         this.artistRepository = artistRepository;
         this.genreRepository = genreRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -103,7 +110,19 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    @Transactional
     public void deleteSong(Long id) {
-        songRepository.deleteById(id);
+        Song song = songRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Song not found with id: " + id));
+
+        entityManager.createNativeQuery("DELETE FROM artist_songs WHERE songs_id = :songId")
+                .setParameter("songId", id)
+                .executeUpdate();
+
+        entityManager.createNativeQuery("DELETE FROM genre_songs WHERE songs_id = :songId")
+                .setParameter("songId", id)
+                .executeUpdate();
+
+        songRepository.delete(song);
     }
 }
