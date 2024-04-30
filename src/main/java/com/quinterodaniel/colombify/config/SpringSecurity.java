@@ -3,6 +3,7 @@ package com.quinterodaniel.colombify.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -55,6 +56,9 @@ public class SpringSecurity {
             .requestMatchers("/signup").permitAll()
             .requestMatchers("/login").permitAll()
             .requestMatchers("/index").permitAll()
+            .requestMatchers(HttpMethod.GET, "/genres/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/artists/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/songs/**").permitAll()
             .requestMatchers("/users").hasRole("ADMIN")
             .anyRequest().authenticated();
 
