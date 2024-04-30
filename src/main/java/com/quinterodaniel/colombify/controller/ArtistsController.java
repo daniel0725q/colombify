@@ -25,4 +25,13 @@ public class ArtistsController {
     public ResponseEntity getArtists() {
         return ResponseEntity.ok(artistService.getAllArtists());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getArtist(@PathVariable("id") Long id) {
+        var artistOptional = artistService.getArtist(id);
+        if (artistOptional.isPresent())
+            return ResponseEntity.ok(artistService.getArtist(id));
+        else
+            return ResponseEntity.notFound().build();
+    }
 }
