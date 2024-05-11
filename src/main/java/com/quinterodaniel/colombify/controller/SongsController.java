@@ -1,5 +1,6 @@
 package com.quinterodaniel.colombify.controller;
 
+import com.google.gson.Gson;
 import com.quinterodaniel.colombify.dto.ArtistDto;
 import com.quinterodaniel.colombify.dto.SongDto;
 import com.quinterodaniel.colombify.service.SongService;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequestMapping("/songs")
@@ -18,10 +21,11 @@ public class SongsController {
     public SongsController(SongService songService) {
         this.songService = songService;
     }
-
     @PostMapping
-    public ResponseEntity createSong(@RequestBody SongDto songToCreate) throws Exception {
-        return ResponseEntity.ok(songService.createSong(songToCreate));
+    public ResponseEntity handleSongFileUpload(@RequestParam("file") MultipartFile file,
+                                   @RequestParam(required = false, value = "body") String songToCreate) throws Exception {
+        var song = new Gson().fromJson(songToCreate, SongDto.class);
+        return ResponseEntity.ok(songService.createSong(song, file));
     }
 
     @PatchMapping("/{id}")

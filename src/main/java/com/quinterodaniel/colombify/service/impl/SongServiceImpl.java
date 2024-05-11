@@ -11,7 +11,9 @@ import com.quinterodaniel.colombify.service.SongService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +44,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Song createSong(SongDto songToCreate) throws Exception {
+    public Song createSong(SongDto songToCreate, MultipartFile file) throws Exception {
         var artistOptional = artistService.getArtist(songToCreate.getArtistId());
         if (artistOptional.isEmpty()) {
             throw new Exception("");
@@ -55,12 +57,14 @@ public class SongServiceImpl implements SongService {
 
         var artist = artistOptional.get();
         var genre = genreOptional.get();
+        byte[] image = Base64.encodeBase64(file.getBytes(), false);
+        String result = new String(image);
         var song = Song.builder()
                 .artist(artist)
                 .artwork(songToCreate.getArtwork())
                 .title(songToCreate.getTitle())
                 .genre(genre)
-                .audioUrl(songToCreate.getAudioUrl())
+                .audioUrl("" + result)
                 .description(songToCreate.getDescription())
                 .build();
 
@@ -100,11 +104,26 @@ public class SongServiceImpl implements SongService {
         }
         var artist = artistOptional.get();
 
+        var genreOptional = genreService.getGenre(songDto.getGenreId());
+        if (genreOptional.isEmpty()) {
+            throw new Exception("Genre not found");
+        }
+        var genre = genreOptional.get();
+        var oldGenre = song.getGenre();
+
+        if (oldGenre != genre) {
+            oldGenre.getSongs().remove(song);
+            genre.getSongs().add(song);
+        }
+
         song.setDescription(songDto.getDescription());
         song.setTitle(songDto.getTitle());
         song.setArtist(artist);
         song.setArtwork(songDto.getArtwork());
         song.setAudioUrl(songDto.getAudioUrl());
+        song.setGenre(genre);
+
+        genreRepository.save(genre);
 
         return songRepository.save(song);
     }
