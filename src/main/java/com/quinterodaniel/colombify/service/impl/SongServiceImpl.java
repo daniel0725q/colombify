@@ -144,4 +144,8 @@ public class SongServiceImpl implements SongService {
 
         songRepository.delete(song);
     }
+
+    public List<Song> getSongsByIdentifier(String identifier) {
+        return songRepository.findSongsByTitleStartingWith(identifier);
+    }
 }

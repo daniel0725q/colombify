@@ -48,4 +48,10 @@ public class SongsController {
         songService.deleteSong(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/find")
+    public ResponseEntity getSongByIdentifier(@RequestParam("identifier") String identifier) {
+        return ResponseEntity.ok(songService.getSongsByIdentifier(identifier));
+    }
+
 }

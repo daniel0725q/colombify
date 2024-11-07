@@ -15,4 +15,6 @@ public interface SongService {
     Song updateSong(Long id, SongDto song) throws Exception;
 
     void deleteSong(Long id);
+
+    List<Song> getSongsByIdentifier(String identifier);
 }

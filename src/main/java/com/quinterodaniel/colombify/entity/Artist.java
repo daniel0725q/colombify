@@ -1,6 +1,7 @@
 package com.quinterodaniel.colombify.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +25,7 @@ public class Artist {
     @Column(nullable = false)
     private String bio;
 
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnore
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("artist")
     private List<Song> songs;
 }

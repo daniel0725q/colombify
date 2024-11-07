@@ -34,4 +34,10 @@ public class ArtistsController {
         else
             return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/find")
+    public ResponseEntity getArtistByString(@RequestParam("identifier") String identifier) {
+        var artists = artistService.getArtistsByName(identifier);
+        return ResponseEntity.ok(artists);
+    }
 }

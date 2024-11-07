@@ -39,8 +39,8 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public List<Artist> getArtistsByName(String name) {
-        return null;
+    public List<Artist> getArtistsByName(String identifier) {
+        return artistRepository.findArtistByStageNameStartsWith(identifier);
     }
 
     @Override

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface SongRepository extends CrudRepository<Song, Long> {
     List<Song> findAll();
+    List<Song> findSongsByTitleStartingWith(String identifier);
 }

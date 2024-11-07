@@ -1,5 +1,6 @@
 package com.quinterodaniel.colombify.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -30,8 +31,10 @@ public class Song {
     private String description;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonIgnoreProperties("songs")
     private Genre genre;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonIgnoreProperties("songs")
     private Artist artist;
 }

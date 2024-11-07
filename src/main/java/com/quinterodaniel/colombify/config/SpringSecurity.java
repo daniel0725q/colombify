@@ -48,19 +48,20 @@ public class SpringSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf()
-            .disable()
-            .cors()
-            .and()
-            .authorizeRequests()
-            .requestMatchers("/signup").permitAll()
-            .requestMatchers("/login").permitAll()
-            .requestMatchers("/index").permitAll()
-            .requestMatchers(HttpMethod.GET, "/genres/**").permitAll()
-            .requestMatchers(HttpMethod.GET, "/artists/**").permitAll()
-            .requestMatchers(HttpMethod.GET, "/songs/**").permitAll()
-            .requestMatchers("/users").hasRole("ADMIN")
-            .anyRequest().authenticated();
+                .csrf()
+                .disable()
+                .cors()
+                .and()
+                .authorizeRequests()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/signup").permitAll()
+                .requestMatchers("/login").permitAll()
+                .requestMatchers("/index").permitAll()
+                .requestMatchers(HttpMethod.GET, "/genres/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/artists/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/songs/**").permitAll()
+                .requestMatchers("/users").hasRole("ADMIN")
+                .anyRequest().authenticated();
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -70,7 +71,7 @@ public class SpringSecurity {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-            .userDetailsService(userDetailsService)
-            .passwordEncoder(passwordEncoder());
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 }

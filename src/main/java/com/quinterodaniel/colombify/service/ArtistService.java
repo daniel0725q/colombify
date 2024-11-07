@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface ArtistService {
     Artist createArtist(ArtistDto artistToCreate);
     Optional<Artist> getArtist(Long id);
-    List<Artist> getArtistsByName(String name);
+    List<Artist> getArtistsByName(String identifier);
     List<Artist> getAllArtists();
 }

@@ -1,6 +1,6 @@
 package com.quinterodaniel.colombify.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,7 +27,7 @@ public class Genre {
     @Column(nullable = false)
     private String colorInHex;
 
-    @OneToMany
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("artist")
     private List<Song> songs;
 }
