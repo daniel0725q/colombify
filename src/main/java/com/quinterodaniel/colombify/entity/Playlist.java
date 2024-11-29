@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,5 +25,5 @@ public class Playlist {
     private User user;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    private List<Song> songs;
+    private Set<Song> songs;
 }
